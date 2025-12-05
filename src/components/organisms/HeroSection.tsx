@@ -121,8 +121,15 @@ const HeroSection: React.FC<HeroSectionProps> = ({ candidates: initialCandidates
                 return (
                   <div key={index} className={`card ${positionClass}`}>
                     <div className="card-header">
-                      <Image src={person.avatar} alt={person.name} className="avatar" width={100} height={100} />
-                      <Image src={person.flag} alt="flag" className="flag" width={25} height={18} />
+                      <Image
+                        src={person.avatar}
+                        alt={person.name}
+                        className="avatar"
+                        width={100}
+                        height={100}
+                        unoptimized
+                      />
+                      <Image src={person.flag} alt="flag" className="flag" width={25} height={18} unoptimized />
                     </div>
                     <h3 className="no-copy">{person.name}</h3>
                     <h4>
