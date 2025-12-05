@@ -14,8 +14,11 @@ export const dynamic = 'force-dynamic';
 
 async function getCandidates(): Promise<Candidate[]> {
   try {
-    // Use relative URL for internal API calls in SSR
-    const res = await fetch('/api/candidates', {
+    // Use absolute URL for SSR compatibility
+    const baseUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/api/candidates`, {
       cache: 'no-store', // Ensure fresh data on each SSR request
     });
 
