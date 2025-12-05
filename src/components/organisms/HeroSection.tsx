@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -16,8 +16,27 @@ interface HeroSectionProps {
   candidates: Candidate[];
 }
 
-const HeroSection: React.FC<HeroSectionProps> = ({ candidates }) => {
+const HeroSection: React.FC<HeroSectionProps> = ({ candidates: initialCandidates }) => {
+  const [candidates, setCandidates] = useState<Candidate[]>(initialCandidates);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const fetchCandidates = async () => {
+      try {
+        const res = await fetch('/api/candidates');
+        if (res.ok) {
+          const response = await res.json();
+          if (response.success) {
+            setCandidates(response.data || []);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching candidates:', error);
+      }
+    };
+
+    fetchCandidates();
+  }, []);
 
   const moveCarousel = (direction: number) => {
     setCurrentIndex((prevIndex) => {
